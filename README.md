@@ -9,8 +9,8 @@ A gyökérkönyvtárban két fájl található: *HybridFunctions.R* és *HybridF
 Mindkét fájlban ugyan azon függvények találhatók meg, csak a *HybridFunctions_Parallelized.R* fájlban az algoritmus szimultán számítja ki az aktuális memóriában lévő egyedekhez tartozó modelleket. Ezeket a fájlokat kell a *source* paranccsal meghívni, ha alkalmazni akarjuk a Hibrid algoritmust.
 
 Az almappák tartalma:
-1. Bank-Credit-Card-Default: A Hibrid és a Benchmarkként használt algoritmusok futási eredményeit tartalmazza a *banki ügyfelek* adatbázison.
-2. Concrete-Data: A Hibrid és a Benchmarkként használt algoritmusok futási eredményeit tartalmazza a *betongerendák* adatbázison.
+1. **Bank-Credit-Card-Default**: A Hibrid és a Benchmarkként használt algoritmusok futási eredményeit tartalmazza a *banki ügyfelek* adatbázison.
+2. **Concrete-Data**: A Hibrid és a Benchmarkként használt algoritmusok futási eredményeit tartalmazza a *betongerendák* adatbázison.
 
 ### A *Hibrid* függvény
 A Hibrid algoritmust futtató *fő (main)* függvény.
