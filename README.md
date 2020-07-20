@@ -6,7 +6,7 @@ The rest of the documentation is in Hungarian for now.
 ## Hibrid algoritmus függvényei
 
 A gyökérkönyvtárban két fájl található: *HybridFunctions.R* és *HybridFunctions_Parallelized.R*.
-Mindkét fájlban ugyan azon függvények találhatók meg, csak a *HybridFunctions_Parallelized.R* fájlban az algoritmus szimultán számítja ki az aktuális memóriában lévő egyedekhez tartozó modelleket. Ezeket a fájlokat kell a *source* paranccsal meghívni, ha alkalmazni akarjuk a Hibrid algoritmust.
+<br>Mindkét fájlban ugyan azon függvények találhatók meg, csak a *HybridFunctions_Parallelized.R* fájlban az algoritmus szimultán számítja ki az aktuális memóriában lévő egyedekhez tartozó modelleket.<br>Ezeket a fájlokat kell a *source* paranccsal meghívni, ha alkalmazni akarjuk a Hibrid algoritmust.
 
 Az almappák tartalma:
 1. **Bank-Credit-Card-Default**: A Hibrid és a Benchmarkként használt algoritmusok futási eredményeit tartalmazza a *banki ügyfelek* adatbázison.
