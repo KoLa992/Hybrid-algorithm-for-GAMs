@@ -1,5 +1,5 @@
 # Hybrid Algorithm for GAMs
-Implementation of a *hybrid genetic - harmony search algorithm* for feature selection in GAMs. Some test cases are also included.
+An R implementation of a *hybrid genetic - harmony search algorithm* for feature selection in GAMs. Some test cases are also included.
 
 The rest of the documentation is in Hungarian for now.
 
