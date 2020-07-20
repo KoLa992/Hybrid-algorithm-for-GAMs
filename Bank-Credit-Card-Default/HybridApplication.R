@@ -82,7 +82,7 @@ for (i in 1:runnumber) {
   eredmenyek[i,6]=futasido
 }
 
-write.csv(eredmenyek, file = "resHibrid_Default.csv", sep = ";", dec = ',', quote = FALSE,
+write.table(eredmenyek, file = "resHibrid_Default.csv", sep = ";", dec = ',', quote = FALSE,
           row.names = FALSE)
 
 #get the best modell --> row index of "eredmenyek" needs to be updated!!!
