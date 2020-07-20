@@ -206,9 +206,9 @@ Hibrid=function(genszam,pop_meret,maxlepes,mutacio, HMCR, vegmutacio, vegHMCR, k
         ujpop[j,1]=toString(rbinom(genszam,1,1/2))
       }
       egyed.akt=as.numeric(strsplit(ujpop[j,1],",")[[1]])
-      print(j)
-      print(egyed.akt)
-      flush.console()
+      #print(j)
+      #print(egyed.akt)
+      #flush.console()
       if(sum(egyed.akt)==0){
         ujpop[j,2]=-200000
         ujpop[j,3]=0
