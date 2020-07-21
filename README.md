@@ -32,7 +32,7 @@ Bemeneti paraméterek:
 14. **magok**: Egy *int*, ami megadja futtatáshoz hány CPU magot vehet igénybe az algoritmus. Érdemes az elérhető CPU magok száma - 1 értéket megadni, hogy ne terhelje a futtatás teljesen a CPU-t. A *HybridFunctions.R* fájlban lévő verzió a paramétert az egy egyedhez tartozó GAM párhuzamosított számításához használja. A *HybridFunctions_Parallelized.R* fájlban lévő verzió az aktuális memóriában lévő egyedekhez tartozó modellek szimultán kiszámításához használja fel a paraméter értékét.
 
 Kimeneti paraméterek:
-* Egy **kételemű *double listát*** ad vissza, melynek elemei:
+* Egy **kételemű *listát*** ad vissza, melynek elemei:
   1. **legjobb**: Egy négyelemű lista, ami az utolsó generáció *legjobb egyedének* paramétereit adja vissza.
      1. Az egyed bináris reprezentációját tartalmazó *string*.
      2. Az egyedhez tartozó GAM pszeudo R-négyzet értéke, ami egy *double* típusú érték.
