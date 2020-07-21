@@ -1,7 +1,7 @@
 ## A mappa tartalma
 
  * **train.Rda és test.Rda**: A betongerendák adatbázisból készített tanító és teszt halmazok R dataframe objektumai.
- * **trainConcr.csv**: A *train.Rda* fájlból készített csv állomány oylan formátumban, ami a HSIC-Lasso algoritmus Python implementációjával kompatibilis.
+ * **trainConcr.csv**: A *train.Rda* fájlból készített csv állomány olyan formátumban, ami a HSIC-Lasso algoritmus Python implementációjával kompatibilis.
  * **Benchmark.R**: A vizsgált benchmark algoritmusokat (HSIC-Lasso és mRMR) futtató és az eredményeket kiértékelő R szkript.
  * **BestSubsets.R**: R szkript, ami a betongerendák adatbázis összes lehetséges magyarázóváltozójának minden részhalmazához kiszámítja a GAM-ot. Ezek után megkeresi a változószelekciós feladat  globális optimumát a concurvity korlátokkal és anélkül.
  * **HybridApplication_ConcreteData.R**: A hibrid algoritmust a betongerendák adatbázison futtató R szkript. A futtatások putputját "resHibrid_*X*.csv" elnevezési konvenciójú fájlokba exportálja. A *csv* állományok *xlsx* formátumba mentve további feldolgozásra is alkalmasak.
