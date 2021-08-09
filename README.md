@@ -10,13 +10,17 @@ Contents of the Subfolders:
 1. **Bank-Credit-Card-Default**: Results from applying the Hybrid and the examined Benchmark algorithms on the *Credit Card Deafult Dataset*.
 2. **Concrete-Data**: Results from applying the Hybrid and the examined Benchmark algorithms on the *Concrete Comprehensive Strength Dataset*.
 
+Important terminology:
+1. **individual** = a possible solution for the optimal feature subset.
+2. **Populaton / Harmony Memory** = Individuals that are evaluated based on their corresponding GAMs during an interation (or generation) of the Hybrid Algorithm.
+
 ### The *Hibrid* function
 The *main* function running the Hybrid Algorithm.
 
 Input Parameters:
 1. **genszam**: An *int*, that gives the number of possible feature variables in the current dataset.
-2. **pop_meret**: An *int*, that determines the size of the populaton/harmony memory.
-3. **maxlepes**: An *int*, that determines the maximum number of iterations the algorithm can run.
+2. **pop_meret**: An *int*, that determines the size of the populaton / harmony memory.
+3. **maxlepes**: An *int*, that determines the maximum number of iterations (or generations) the algorithm can run.
 4. **mutacio**: A *double*, determines the initial mutation (*bw*) probability.
 5. **HMCR**: A *double*, that determines the inital *HMCR* probability.
 6. **vegmutacio**: A *double*, that determines the mutation (*bw*) probability in the last generation (the last generation is determined in the *maxlepes* parameter).
