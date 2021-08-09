@@ -1,10 +1,10 @@
-## A mappa tartalma
+## Contents of this Folder
 
- * **train.Rda és test.Rda**: A betongerendák adatbázisból készített tanító és teszt halmazok R dataframe objektumai.
- * **trainConcr.csv**: A *train.Rda* fájlból készített csv állomány olyan formátumban, ami a HSIC-Lasso algoritmus Python implementációjával kompatibilis.
- * **Benchmark.R**: A vizsgált benchmark algoritmusokat (HSIC-Lasso és mRMR) futtató és az eredményeket kiértékelő R szkript.
- * **BestSubsets.R**: R szkript, ami a betongerendák adatbázis összes lehetséges magyarázóváltozójának minden részhalmazához kiszámítja a GAM-ot. Ezek után megkeresi a változószelekciós feladat  globális optimumát a concurvity korlátokkal és anélkül.
- * **HybridApplication_ConcreteData.R**: A Hibrid algoritmust a betongerendák adatbázison futtató R szkript. A futtatások outputját "resHibrid_*X*.csv" elnevezési konvenciójú fájlokba exportálja. A *csv* állományok *xlsx* formátumba mentve további feldolgozásra is alkalmasak.
- * **resHibrid_initialParams.xlsx**: A Hibrid algoritmus első futtatása a betongerendák adatbázison, kezdeti paraméter értékekkel. A *HybridApplication_ConcreteData.R* szkript generálta a *csv*-t, majd Excellel kimutatások készültek további elemzés céljából.
- * **ConcreteTestsSummary.xlsx**: A Hibrid algoritmusparamétereinek érzékenységvizsgálat érdeményeit összesítő Excel tábla. A konkrét futtatások outputjai a *Hybrid-Results* almappában találhatók.
- * **resHibrid_optParams.xlsx**: A Hibrid algoritmus futtatása a betongerendák adatbázison, az optimális paraméter értékekkel. A *HybridApplication_ConcreteData.R* szkript generálta a *csv*-t, majd Excellel kimutatások készültek további elemzés céljából.
+ * **train.Rda and test.Rda**: R dataframe objects of the training and test sets sampled from the Concrete Comprehensive Strength Dataset.
+ * **trainConcr.csv**: A csv file created from the *train.Rda* file in a format that is comaptible with the Python implementation of the HSIC-Lasso algorithm.
+ * **Benchmark.R**: An R script for running the primary benchamrk algorithms (HSIC-Lasso, mRMR) and for evaluating the results of their proposed models.
+ * **BestSubsets.R**: An R script for generating every possible feature subsets of the Concrete Comprehensive Strength Dataset and estimating their corresponding GAMs. Next, the script gives the global optimum of the feature selection task with and without applying constraints for concurvity.
+ * **HybridApplication_ConcreteData.R**: An R script for running the Hybrid Algorithm on the Concrete Comprehensive Strength Dataset. Output of the algorithm is exported to files with the naming convention "resHibrid_*X*.csv". These *csv* files are suitable for further processing when converted to *xlsx* format.
+ * **resHibrid_initialParams.xlsx**: Results from  the first run of the Hybrid Algorithm on the Concrete Comprehensive Strength Dataset with initial parameter values. The script titled *HybridApplication_ConcreteData.R* generated the output *csv*, then it was processed for further analysis with Excel pivots.
+ * **ConcreteTestsSummary.xlsx**: An Excel table summarising the sensitivity analysis results of the Hybrid Algorithm's parameters. Specific output files for each examined parameter setup can be found in the *Hybrid-Results* subfolder.
+ * **resHibrid_optParams.xlsx**: Results from running of the Hybrid Algorithm on the Concrete Comprehensive Strength Dataset with the optimal parameter values. The script titled *HybridApplication_ConcreteData.R* generated the output *csv*, then it was processed for further analysis with Excel pivots.
