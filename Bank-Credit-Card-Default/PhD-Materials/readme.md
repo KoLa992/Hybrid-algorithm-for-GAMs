@@ -1,1 +1,1 @@
-A PhD értekezéstervezethez tartozó extra R kódok és futtatási eredmények.
+A PhD értekezéshez tartozó extra R kódok és futtatási eredmények.
