@@ -1,8 +1,8 @@
-## A mappa tartalma
- * **train.Rda és test.Rda**: A banki ügyfelek adatbázisból készített tanító és teszt halmazok R dataframe objektumai.
- * **trainDefault.csv**: A *train.Rda* fájlból készített csv állomány olyan formátumban, ami a HSIC-Lasso algoritmus Python implementációjával kompatibilis.
- * **BenchmarkModels.R**: A vizsgált benchmark algoritmusokat (HSIC-Lasso, mRMR, CART, Random Forest RFE szelekcióval) futtató és az eredményeket kiértékelő R szkript. Az algoritmusok futásidői 20 replikáció során a **RunTime_mRMR_HSICLasso_DT_RF.xlsx** fájlban kerültek rögzítésre.
- * **BestSubsets_RunTimes.R**: A két eltérő párhuzamosítási logika és az 5000 elemű véletlen alminták alkalmazásának hatását tesztelő R szkrpit.
-    * A szkript első része a futásidőket 100 véletlenszerűen generált változóhalmazhoz (egyedhez) tartozó GAM esetében vizsgálja. A szkript ezen része vegül a **FullData_RunTimes.xlsx** fájlt generálja.
-    * A szkript második része vizsgálja az 5000 elemű véletlen alminták alkalmazása esetén 100 replikációval a pszeudo R-négyzet mintavételezési eloszlását. Az szkript végül a **SubSample_Rsq.csv** fájlt generálja.
-* **HybridApplication.R**: A Hibrid algoritmust a banki ügyfelek adatbázison futtató R szkript. A futtatások outputját egy "resHibrid_Default.csv" elnevezésű fájlba exportálja. A *csv* állomány tartalma a további feldolgozás és elemzések során a **resHibrid_BankClientsDefault.xlsx** fájl *resHibrid_Default.csv* munkalapjára került.
+## Contents of this Folder
+ * **train.Rda and test.Rda**: R dataframe objects of the training and test sets sampled from the Credit Card Deafult Dataset.
+ * **trainDefault.csv**: A csv file created from the *train.Rda* file in a format that is comaptible with the Python implementation of the HSIC-Lasso algorithm.
+ * **BenchmarkModels.R**: An R script for running the primary benchamrk algorithms (HSIC-Lasso, mRMR, CART, Random Forest with RFE Selection) and for evaluating the results of their proposed models. Runtimes of these algorithms based on 20 replications are stored in the **RunTime_mRMR_HSICLasso_DT_RF.xlsx** file.
+ * **BestSubsets_RunTimes.R**: An R script for testing the two different parallelization strategies for the Hybrid Algorithm and for also testing the effects of applying subsamples of 5000 observations for GAM training.
+    * First part of the script examines the runtimes of GAMs using 100 randomly generated feature subsets. This part of the script ends with generating the **FullData_RunTimes.xlsx** file.
+    * Second part of the script examines the sampling distribution of the pseudo R-squared measures based on 100 replications of applying subsamples of 5000 observations for GAM training. This part of the script ends with generating the **SubSample_Rsq.csv** file.
+* **HybridApplication.R**: An R script for running the Hybrid Algorithm on the Credit Card Deafult Dataset. Output of the aégorithm is exported to a file titled "resHibrid_Default.csv". Contents of the *csv* file can be found on the *resHibrid_Default.csv* sheet of the **resHibrid_BankClientsDefault.xlsx** file in order to conduct further processing and anaylsis.
