@@ -1,73 +1,70 @@
 # Hybrid Algorithm for GAMs
 An R implementation of a *hybrid genetic - harmony search algorithm* for feature selection in GAMs. Some test cases are also included.
 
-The rest of the documentation is in Hungarian for now.
+## Functions Implementing the Hybrid Algorithm
 
-## Hibrid algoritmus függvényei
+There two files in the root directory: *HybridFunctions.R* és *HybridFunctions_Parallelized.R*.
+<br>Both files contain the same functions. The only difference is that the *HybridFunctions_Parallelized.R* file the algorithm computes the GAMs corresponding to each individual in the current harmony memory simultaneously.<br> These files need to be called with the *source* command if the Hybrid Algorithm needs to be applied on a dataset.
 
-A gyökérkönyvtárban két fájl található: *HybridFunctions.R* és *HybridFunctions_Parallelized.R*.
-<br>Mindkét fájlban ugyan azon függvények találhatók meg, csak a *HybridFunctions_Parallelized.R* fájlban az algoritmus szimultán számítja ki az aktuális memóriában lévő egyedekhez tartozó modelleket.<br>Ezeket a fájlokat kell a *source* paranccsal meghívni, ha alkalmazni akarjuk a Hibrid algoritmust.
+Contents of the Subfolders:
+1. **Bank-Credit-Card-Default**: Results from applying the Hybrid and the examined Benchmark algorithms on the *Credit Card Deafult Dataset*.
+2. **Concrete-Data**: Results from applying the Hybrid and the examined Benchmark algorithms on the *Concrete Comprehensive Strength Dataset*.
 
-Az almappák tartalma:
-1. **Bank-Credit-Card-Default**: A Hibrid és a Benchmarkként használt algoritmusok futási eredményeit tartalmazza a *banki ügyfelek* adatbázison.
-2. **Concrete-Data**: A Hibrid és a Benchmarkként használt algoritmusok futási eredményeit tartalmazza a *betongerendák* adatbázison.
+### The *Hibrid* function
+The *main* function running the Hybrid Algorithm.
 
-### A *Hibrid* függvény
-A Hibrid algoritmust futtató *fő (main)* függvény.
+Input Parameters:
+1. **genszam**: An *int*, that gives the number of possible feature variables in the current dataset.
+2. **pop_meret**: An *int*, that determines the size of the populaton/harmony memory.
+3. **maxlepes**: An *int*, that determines the maximum number of iterations the algorithm can run.
+4. **mutacio**: A *double*, determines the initial mutation (*bw*) probability.
+5. **HMCR**: A *double*, that determines the inital *HMCR* probability.
+6. **vegmutacio**: A *double*, that determines the mutation (*bw*) probability in the last generation (the last generation is determined in the *maxlepes* parameter).
+7. **vegHMCR**: A *double*, that determines the *HMCR* probability in the last generation (the last generation is determined in the *maxlepes* parameter).
+8. **konvergKrit**: An *int*, that determines the early stopping criterion. If the best solution does not change for the number of generations given here, the algorithm stops.
+9. **X**: A *dataframe* or a *named matrix* object, that contains the realized values of all the feature variables on the training set. **Important:** feature variables of *factor* type have to be represented by dummy variables in this object!
+10. **Y**: A *vector*, that contains the realized values of the target variable on the training set (in an order matching with that of the table given in the *X* parameter).
+11. **csalad**: A *string*, that gives the distribution of the target variable. A list of acceptable values can be found in the <a href="https://www.rdocumentation.org/packages/mgcv/versions/1.8-31/topics/family.mgcv" target="_blank">documentation</a> for the *family* parameter of the *bam* function in the *mgcv* package.
+12. **faktorok**: A *vector of strings*, that contains the names of the dummy variables representing *factor*s in the table given in the *X* parameter.
+13. **konkurv_strict**: An *int*, that controls whether the *concurvity* constraint should consider the pessimistic or the observed concurvity measure from the *mgcv* package. Pessimistic measure = 1; Observed measure = 2.
+14. **magok**: An *int*, that determines the number of CPU cores the algorithm can use for parallel computation of GAMs. It is advisable to use the number of available cores inus 1 here, not to overload your CPU. The version of the algorithm in the *HybridFunctions.R* file applies this parameter for the parallel computation of the parameter estimates of a single GAM. The version in *HybridFunctions_Parallelized.R* applies this parameter for the simultaneous computation of GAMs corresponding to each individual in the current harmony memory.
 
-Bemeneti paraméterek:
-1. **genszam**: Egy *int*, ami a lehetséges magyarázóváltozók számát adja meg az adatbázisban.
-2. **pop_meret**: Egy *int*, ami a populáció/memória méretét adja meg.
-3. **maxlepes**: Egy *int*, ami a maximális generációszámot adja meg, ameddíg még elmehet az algoritmus.
-4. **mutacio**: Egy *double*, ami az induló mutációs (*bw*) valószínűséget adja meg.
-5. **HMCR**: Egy *double*, ami az induló *HMCR* valószínűséget adja meg.
-6. **vegmutacio**: Egy *double*, ami az utolsó generációban (aminek értékét a *maxlepes* paraméter adja meg) elérendő mutációs (*bw*) valószínűséget adja meg.
-7. **vegHMCR**: Egy *double*, ami az utolsó generációban (aminek értékét a *maxlepes* paraméter adja meg) elérendő *HMCR* valószínűséget adja meg.
-8. **konvergKrit**: Egy *int*, ami a korai kilépési feltétel adja meg. Ha az itt megadott értéknek megfelelő számú generáción keresztül nem változik a legjobb megoldás, akkor az algoritmus futása leáll.
-9. **X**: Egy *dataframe* vagy *named matrix*, ami lehetséges magyarázóváltozók értékét tartalmazza a tanító adatbázison. **Fontos**, hogy a faktorváltozók már dummy változókkal legyenek reprezentálva ebben a táblában!
-10. **Y**: Egy *vector*, ami az eredményváltozó értékeit tartalmazza a tanító adatbázison (az *X* paraméterben megadott táblával egyező sorrendben).
-11. **csalad**: Egy *string*, ami az eredményváltozó eloszlását adja meg. A lehetséges értékek listáját lásd az *mgcv* csomag *bam* függvényének *family* paraméteréhez tartozó <a href="https://www.rdocumentation.org/packages/mgcv/versions/1.8-31/topics/family.mgcv" target="_blank">dokumentációban</a>.
-12. **faktorok**: Egy *string* lista, ami a faktorkat reprezentáló dummy változók neveit tartalmazza az *X* paraméterben.
-13. **konkurv_strict**: Egy *int*, ami azt szabályozza, hogy a *concurvity* korlát az *mgcv* csomag által számolt megfigyelt vagy pesszimista concurvity mértékre vonatkozzon-e. Pesszimista mérték = 1; Megfigyelt mérték = 2.
-14. **magok**: Egy *int*, ami megadja futtatáshoz hány CPU magot vehet igénybe az algoritmus. Érdemes az elérhető CPU magok száma - 1 értéket megadni, hogy ne terhelje a futtatás teljesen a CPU-t. A *HybridFunctions.R* fájlban lévő verzió a paramétert az egy egyedhez tartozó GAM párhuzamosított számításához használja. A *HybridFunctions_Parallelized.R* fájlban lévő verzió az aktuális memóriában lévő egyedekhez tartozó modellek szimultán kiszámításához használja fel a paraméter értékét.
+Output parameters:
+* Returns a ***list* with two elements**:
+  1. **best**: a list with four elements that contains the parameters of the *best individual* in the last generation.
+     1. A *string* describing the binary representation of the individual/solution.
+     2. A *double*, that gives the pseudo R-squared value of the GAM corresponding to the best individual in the last generation.
+     3. A *logical*, that describes whether the GAM corresponding to the best individual in the last generation satisfies the significance constraint, *S<sub>i</sub>*.
+     4. A *logical*, that describes whether the GAM corresponding to the best individual in the last generation satisfies the concurvity constraint, *C<sub>i</sub>*.
+  2. **konvergszamlalo**: An *int*, that indicates how many generations the best individual in the last generation spent in the memory/population before the algorithm stopped.
 
-Kimeneti paraméterek:
-* Egy **kételemű *listát*** ad vissza, melynek elemei:
-  1. **legjobb**: Egy négyelemű lista, ami az utolsó generáció *legjobb egyedének* paramétereit adja vissza.
-     1. Az egyed bináris reprezentációját tartalmazó *string*.
-     2. Az egyedhez tartozó GAM pszeudo R-négyzet értéke, ami egy *double* típusú érték.
-     3. Egy *logical* érték, ami leírja, hogy az egyedhez tartozó GAM teljesíti-e a bázisfüggvények szignifikanciájára szóló *S<sub>i</sub>* korlátot.
-     4. Egy *logical* érték, ami leírja, hogy az egyedhez tartozó GAM teljesíti-e a concurvity-re szóló *C<sub>i</sub>* korlátot.
-  2. **konvergszamlalo**: Egy *int* érték, ami azt mutatja, hogy az utolsó generáció legjobb egyede hány generáció óta szerepelt a memóriákban.
+### The *ModellEpit* function
+It estimates a GAM based on the binary representation of an individual's feature subset and returns the model parameters necessary for feature selection in the Hybrid Algorithm.
 
-### A *ModellEpit* függvény
-Egy egyed bináris reprezentációja alapján felépíti a hozzá tartozó GAM modellt és visszaadja annak változószelekció szempontjából fontos paramétereit.
+Input parameters:
+1. **egyed**: A *list of logicals*, that contains the binary representation of an individual's feature subset.
+2. **X**: Inherited from the *Hibrid* function.
+3. **Y**: Inherited from the *Hibrid* function.
+4. **csalad**: Inherited from the *Hibrid* function.
+5. **faktorok**: Inherited from the *Hibrid* function.
+6. **konkurv_strict**: Inherited from the *Hibrid* function.
+7. **magok**: Inherited from the *Hibrid* function. Only used in the version found in the *HybridFunctions.R* file. In this version, computation of the parameter estimates of a single GAM is parallelized. Individuals in the current harmony memory are processed in a serial manner for this version.
 
-Bemeneti paraméterek:
-1. **egyed**: Egy *logical lista*, ami az egyed bináris reprezentációját tartalmazza.
-2. **X**: A *Hibrid* függvénytől örökli.
-3. **Y**: A *Hibrid* függvénytől örökli.
-4. **csalad**: A *Hibrid* függvénytől örökli.
-5. **faktorok**: A *Hibrid* függvénytől örökli.
-6. **konkurv_strict**: A *Hibrid* függvénytől örökli.
-7. **magok**: A *Hibrid* függvénytől örökli. Csak a *HybridFunctions.R* fájlban található verzió használja. Ebben a verzióban egy GAM modell kiszámítása került párhuzamosításra. 
-Az aktuális memóriában lévő egyedekhez tartozó modellek soros módon kerülnek feldolgozásra ebben a verzióban.
+Output parameters:
+* returns a **list of *doubles* with three elements**:
+  1. A *double*, that gives the pseudo R-squared value of GAM corresponding to the individual.
+  2. A *logical*, that describes whether the GAM corresponding to the individual satisfies the significance constraint, *S<sub>i</sub>*.
+  3. A *logical*, that describes whether the GAM corresponding to the individual satisfies the concurvity constraint, *C<sub>i</sub>*.
 
-Kimeneti paraméterek:
-* Egy **háromelemű *double listát*** ad vissza, melynek elemei:
-  1. Az egyedhez tartozó GAM pszeudo R-négyzet értéke, ami egy *double* típusú érték.
-  2. Egy *logical* érték, ami leírja, hogy az egyedhez tartozó GAM teljesíti-e a bázisfüggvények szignifikanciájára szóló *S<sub>i</sub>* korlátot.
-  3. Egy *logical* érték, ami leírja, hogy az egyedhez tartozó GAM teljesíti-e a concurvity-re szóló *C<sub>i</sub>* korlátot.
+### The *ModellEpit_B* function
+Not directly a part of the Hybrid Algorithm. It can be called after the *Hibrid* function was run. Estimates a GAM based on the binary representation of the best individual in the last generation of the Hybrid Algorithm and returns the **full R object describing the GAM**. Aim of this function is to allow the user to execute further diagnostic tests on the GAM proposed by the Hybrid Algorithm. E.g. evaluating its performance on a separate test set.
 
-### A *ModellEpit_B* függvény
-Nem közvetlenül a Hibrid algoritmus része. Az algoritmus lefutása után használható. A legjobb egyed bináris reprezentációja alapján felépíti a hozzá tartozó GAM modellt és visszaadja a **teljes modellt leíró R objektumot**. A célja, hogy a Hibrid algoritmus legjobb modelljén további diagnosztikai vizsgálatokat tudjunk végezni. Pl. kiértékelni a teljesítményét egy teszt adatbázison.
+Input parameters:
+1. **egyed**: A *list of logicals*, that contains the binary representation of an individual's feature subset.
+2. **X**: Inherited from the *Hibrid* function.
+3. **Y**: Inherited from the *Hibrid* function.
+4. **csalad**: Inherited from the *Hibrid* function.
+5. **magok**: Inherited from the *Hibrid* function. This function always estimates the parameters of the GAM corresponding to the input individual parallelized, as in the use case for this function, there is no need to estimate GAMs corresponding to several individuals.
 
-Bemeneti paraméterek:
-1. **egyed**: Egy *logical lista*, ami az egyed bináris reprezentációját tartalmazza.
-2. **X**: A *Hibrid* függvénytől örökli.
-3. **Y**: A *Hibrid* függvénytől örökli.
-4. **csalad**: A *Hibrid* függvénytől örökli.
-5. **magok**: A *Hibrid* függvénytől örökli. Ez a függvény az aktuális egyedhez tartozó GAM-ot mindig párhuzamosítottan számolja ki, hiszen itt biztosan nincs szükség több egyedhez tartozó modell párhuzamosított kiszámítására.
-
-Kimeneti paraméterek:
-1. **gam.mod**: Az egyedhez tartozó GAM-ot leíró R objektum.
+Output parameters:
+1. **gam.mod**: The R object describing the GAM corresponding to the individual.
