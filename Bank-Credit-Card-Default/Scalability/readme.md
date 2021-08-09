@@ -1,1 +1,3 @@
-Contents of this Folder
+## Contents of this Folder
+ * **resHibrid_BankClientsDefault_.xlsx** files: Excel files containing runtime results of the Hybrid Algorithm run on hardware configurations with different numbers of processor cores. End of the filenames indicate the number of processor cores used for the numerical experiment. In each case, 20 replications were executed. Structure of the Excel files is the same as the structure of the **resHibrid_BankClientsDefault.xlsx** file in the parent directory.
+ * **ScalabilitySummaryTable.xlsx**: A summary table created by merging the summary statistics of the **resHibrid_BankClientsDefault_.xlsx** files. Some graphs are also added here.
