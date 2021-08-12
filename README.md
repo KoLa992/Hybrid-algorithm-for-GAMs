@@ -1,6 +1,8 @@
 # Hybrid Algorithm for GAMs
 An R implementation of a *hybrid genetic - harmony search algorithm* for feature selection in GAMs. Some test cases are also included.
 
+The Hybrid Algorithm is abbreviated as *HGHK* in my Hungarian papers.
+
 ## Functions Implementing the Hybrid Algorithm
 
 There two files in the root directory: *HybridFunctions.R* és *HybridFunctions_Parallelized.R*.
