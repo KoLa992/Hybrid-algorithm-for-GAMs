@@ -6,7 +6,7 @@
 parts <- unlist(strsplit(getwd(), .Platform$file.sep))
 ParentDirectory <- do.call(file.path, as.list(parts[1:length(parts) - 1]))
 
-source("HybridFunctions_Parallelized.R")
+source("HybridFunctions_Parallelized_withOutput.R")
 
 # ---------------------------------------------
 # Load and preprocess Data and set parameters
@@ -82,7 +82,7 @@ for (i in 1:runnumber) {
   eredmenyek[i,6]=futasido
 }
 
-write.table(eredmenyek, file = "resHibrid_Default.csv", sep = ";", dec = ',', quote = FALSE,
+write.csv(eredmenyek, file = "resHibrid_Default.csv", sep = ";", dec = ',', quote = FALSE,
           row.names = FALSE)
 
 #get the best modell --> row index of "eredmenyek" needs to be updated!!!
@@ -104,3 +104,22 @@ DefaultTest$PredProb <- predict(best.mod, newdata=DefaultTest, type="response")
 library(pROC)
 g <- roc(target ~ PredProb, data = DefaultTest)
 g$auc # Best AUC out of 20 --> 0.7488
+
+# Outlier effect - Cook distance
+
+cook <- cooks.distance(best.mod)
+length(cook[cook > 1]) # Some influential observations
+
+# Refit without influential observations
+
+best.mod<-ModellEpit_B(as.numeric(strsplit(eredmenyek[25,1],",")[[1]]),
+                       DT_Xrnd_AKT[cook < 1,],DT_Yrnd_AKT[cook < 1],"binomial",faktorok,5)
+
+summary(best.mod)
+plot(best.mod,page=1,scheme=1) # No Visible Difference
+
+DefaultTest$PredProb <- predict(best.mod, newdata=DefaultTest, type="response")
+
+library(pROC)
+g <- roc(target ~ PredProb, data = DefaultTest)
+g$auc # 0.7447 --> Slight difference
