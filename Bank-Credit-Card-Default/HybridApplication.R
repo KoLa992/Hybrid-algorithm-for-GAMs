@@ -91,7 +91,8 @@ best.mod<-ModellEpit_B(as.numeric(strsplit(eredmenyek[25,1],",")[[1]]),DT_Xrnd_A
 
 # Diagnostics and performance of the GAM proposed by the Hybrid algorithm
 summary(best.mod)
-plot(best.mod,page=1)
+par(mfrow = c(2, 2), mar = c(3, 3, 2, 1), mgp = c(1.5, 0.5, 0))
+plot(best.mod, page = 1, scheme = 1)
 
 concurvity(best.mod)
 gam.check(best.mod)
