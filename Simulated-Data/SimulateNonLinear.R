@@ -16,7 +16,7 @@ Y <- 2*X1^2 + 2*X5^3 + 2*sin(X6) + rnorm(1000, mean = 0, sd = 0.5)
 
 SimData <- as.data.frame(cbind(X1, X2, X3, X4, X5, X6, X7, Y))
 
-pairs(SimData)
+pairs(SimData, cex = 0.5, col=scales::alpha("black", 0.4))
 
 #------------------------------------------------------------------------------------------------------------------------------
 
@@ -336,7 +336,7 @@ for (i in 1:nrow(populacio)){
     ujpopulacio[i,3]=0
     ujpopulacio[i,4]=0
   } else{
-    mod.out<-ModellEpit(egyed.akt,Train_X,Train_Y)
+    mod.out<-ModellEpit_Fix_k(egyed.akt,Train_X,Train_Y,20)
     ujpopulacio[i,1]=toString(egyed.akt)
     ujpopulacio[i,2]=mod.out[1]
     ujpopulacio[i,3]=mod.out[2]
@@ -352,7 +352,7 @@ legjobbak<-legjobbak[order(legjobbak[,2],decreasing=TRUE),]
 
 # Get the best GAM with constraints
 best=as.character(legjobbak$V1[1])
-best.mod<-ModellEpit_B(as.numeric(strsplit(best,",")[[1]]),Train_X,Train_Y)
+best.mod<-ModellEpit_B_Fix_k(as.numeric(strsplit(best,",")[[1]]),Train_X,Train_Y,20)
 
 # Diagnostics and performance of the best GAM
 summary(best.mod)
@@ -369,7 +369,7 @@ Rsquared_Hybrid # 85.30665%
 rendesPopulacio<-ujpopulacio[order(ujpopulacio[,2],decreasing=TRUE),]
 
 best=as.character(rendesPopulacio$V1[1])
-best.mod<-ModellEpit_B(as.numeric(strsplit(best,",")[[1]]),Train_X,Train_Y)
+best.mod<-ModellEpit_B_Fix_k(as.numeric(strsplit(best,",")[[1]]),Train_X,Train_Y,20)
 
 # Diagnostics and performance of the best GAM
 summary(best.mod)
@@ -392,7 +392,7 @@ eredmenyek<-matrix(nrow = runnumber,ncol = 6)
 
 for (i in 1:runnumber) {
   eleje<-Sys.time()
-  best<-Hibrid(7,13,10,0.9,0.05,0.1,0.35,Train_X,Train_Y)
+  best<-Hibrid(7,13,10,0.9,0.05,0.1,0.35,Train_X,Train_Y,20)
   vege<-Sys.time()
   futasido<-vege-eleje
   eredmenyek[i,1]=best[1]
@@ -403,4 +403,4 @@ for (i in 1:runnumber) {
   eredmenyek[i,6]=futasido
 }
 
-write.csv(eredmenyek, file = "resHibrid_20220423.csv", row.names=FALSE, quote = FALSE)
+write.csv(eredmenyek, file = "resHibrid_20220824.csv", row.names=FALSE, quote = FALSE)
